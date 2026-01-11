@@ -1,22 +1,23 @@
-import { useEffect } from "react";
-import api from "./api/axios";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+//import { HelmetProvider } from "react-helmet-async";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import Cart from "./pages/Cart";
 
 function App() {
-  useEffect(() => {
-    api.get("/health")
-      .then((res) => {
-        console.log("Backend connected:", res.data);
-      })
-      .catch((err) => {
-        console.error("Backend connection failed", err);
-      });
-  }, []);
-
   return (
-    <div>
-      <h1>Clothify Frontend</h1>
-      <p>Check console for backend connection</p>
-    </div>
+    
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/cart" element={<Cart />} />
+          {/* other routes later */}
+        </Routes>
+        <Footer />
+      </Router>
+    
   );
 }
 
