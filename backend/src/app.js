@@ -19,6 +19,10 @@ app.use("/api/products", productRoutes);
 const cartRoutes = require("./routes/cart");
 app.use("/api/cart", cartRoutes);
 
+// Order routes
+const orderRoutes = require("./routes/order");
+app.use("/api/orders", orderRoutes);
+
 
 // Health check route
 app.get("/api/health", (req, res) => {
