@@ -15,6 +15,10 @@ app.use("/api/auth", authRoutes);
 const productRoutes = require("./routes/product");
 app.use("/api/products", productRoutes);
 
+// Cart routes
+const cartRoutes = require("./routes/cart");
+app.use("/api/cart", cartRoutes);
+
 
 // Health check route
 app.get("/api/health", (req, res) => {
