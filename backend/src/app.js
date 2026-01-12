@@ -3,6 +3,10 @@ const cors = require("cors");
 
 const app = express();
 
+// Serve static files
+const path = require("path");
+app.use("/images", express.static(path.join(process.cwd(), "public"))); // Serve /public as /images
+
 // Middleware
 app.use(cors());
 app.use(express.json());

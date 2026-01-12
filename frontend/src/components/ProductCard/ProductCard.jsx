@@ -6,7 +6,7 @@ export default function ProductCard({ product }) {
     <div className="product-card">
       <Link to={`/product/${product._id}`}>
         <img
-          src={product.image}
+          src={`http://localhost:5000${product.imageUrl}`}
           alt={product.name}
           className="product-image"
         />
