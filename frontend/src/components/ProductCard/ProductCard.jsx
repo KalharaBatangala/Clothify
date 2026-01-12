@@ -4,11 +4,13 @@ import "./product.css";
 export default function ProductCard({ product }) {
   return (
     <div className="product-card">
-      <img
-        src={product.image}
-        alt={product.name}
-        className="product-image"
-      />
+      <Link to={`/product/${product._id}`}>
+        <img
+          src={product.image}
+          alt={product.name}
+          className="product-image"
+        />
+      </Link>
 
       <div className="product-info">
         <h3>{product.name}</h3>
