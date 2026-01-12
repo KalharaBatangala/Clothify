@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 
+
 export default function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -25,7 +26,7 @@ export default function ProductDetails() {
     fetchProduct();
   }, [id]);
 
-  if (loading) return <p style={{ padding: "32px" }}>Loading...</p>;
+  if (loading) return <p style={{ padding: "32px" }}> Loading...</p>;
   if (!product) return <p>Product not found</p>;
 
   const addToCartHandler = async () => {
