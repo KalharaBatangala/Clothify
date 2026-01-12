@@ -35,15 +35,41 @@ export default function ProductDetails() {
     return;
   }
 
-  try {
-    await api.post("/cart/add", {
-      productId: product._id,
-      size: selectedSize,
-      quantity: 1,
-    });
+  if (localStorage.getItem("token")) {
+    // user is logged in
+    try {
+      await api.post("/cart/add", {
+        productId: product._id,
+        size: selectedSize,
+        quantity: 1,
+      });
+      alert("Added to cart");
+    } catch (err) {
+      setError("Please login to add items to cart");
+    }
+
+  } else {
+    // guest user , save to localStorage
+    const guestCart = JSON.parse(localStorage.getItem("guestCart")) || [];
+    const existingItem = guestCart.find(
+      (item) => item.productId === product._id && item.size === selectedSize
+    );
+
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      guestCart.push({
+        productId: product._id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        size: selectedSize,
+        qty: 1,
+      });
+    }
+
+    localStorage.setItem("guestCart", JSON.stringify(guestCart));
     alert("Added to cart");
-  } catch (err) {
-    setError("Please login to add items to cart");
   }
 };
 

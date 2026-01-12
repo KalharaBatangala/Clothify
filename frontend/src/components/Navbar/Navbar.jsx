@@ -79,9 +79,7 @@ export default function Navbar() {
         <Link to="/cart" className="nav-link" onClick={() => setMenuOpen(false)}>
           Cart
         </Link>
-        <Link to="/checkout" className="nav-link" onClick={() => setMenuOpen(false)}>
-          Checkout
-        </Link>
+        
 
         {user ? (
           <>
