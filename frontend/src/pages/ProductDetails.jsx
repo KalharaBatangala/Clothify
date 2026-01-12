@@ -26,7 +26,7 @@ export default function ProductDetails() {
 
   return (
     <div style={styles.container}>
-      <img src={product.image} alt={product.name} style={styles.image} />
+      <img src={`http://localhost:5000${product.imageUrl}`} alt={product.name} style={styles.image} />
 
       <div style={styles.info}>
         <h1>{product.name}</h1>
