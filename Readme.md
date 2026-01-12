@@ -35,8 +35,8 @@ root
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone <https://github.com/KalharaBatangala/Clothify>
-cd <Clothify>
+git clone https://github.com/KalharaBatangala/Clothify
+cd Clothify
 ```
 
 ---
