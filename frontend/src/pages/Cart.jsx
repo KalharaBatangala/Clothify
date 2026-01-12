@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
+import { useNavigate } from "react-router-dom";
+
 
 export default function Cart() {
+  const navigate = useNavigate();
   const [cart, setCart] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -110,7 +113,7 @@ const removeItem = async (productId, size) => {
       ))}
 
       <h2>Total: ${total}</h2>
-      <button style={styles.checkoutBtn}>Proceed to Checkout</button>
+      <button style={styles.checkoutBtn} onClick={() => navigate("/checkout")}>Proceed to Checkout</button>
     </div>
   );
 }
