@@ -8,25 +8,28 @@ import Login from "./pages/Login";
 import ProductDetails from "./pages/ProductDetails";
 import Register from "./pages/Register";
 import Checkout from "./pages/Checkout";
-
+import "./index.css";
 
 function App() {
   return (
-    
-      <Router>
+    <Router>
+      <div className="app-layout">
         <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/product/:id" element={<ProductDetails />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/checkout" element={<Checkout />} />
-          {/* other routes later */}
-        </Routes>
+
+        <main className="page-content">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/checkout" element={<Checkout />} />
+          </Routes>
+        </main>
+
         <Footer />
-      </Router>
-    
+      </div>
+    </Router>
   );
 }
 

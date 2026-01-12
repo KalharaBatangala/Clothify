@@ -6,7 +6,7 @@ export default function Footer() {
       background: "#0000A3",
       color: "#fff",
       textAlign: "center",
-      marginTop: "40px"
+      
     }}>
       © {new Date().getFullYear()} Clothify | All rights reserved.
     </footer>
