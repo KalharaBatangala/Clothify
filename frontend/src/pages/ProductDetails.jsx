@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../api/axios";
-
+import { toast } from "react-toastify";
 
 export default function ProductDetails() {
   const { id } = useParams();
@@ -43,9 +43,9 @@ export default function ProductDetails() {
         size: selectedSize,
         quantity: 1,
       });
-      alert("Added to cart");
+       toast.success("Added to cart");
     } catch (err) {
-      setError("Please login to add items to cart");
+      toast.error("Failed to add item. Please login.");
     }
 
   } else {
@@ -69,7 +69,7 @@ export default function ProductDetails() {
     }
 
     localStorage.setItem("guestCart", JSON.stringify(guestCart));
-    alert("Added to cart");
+    toast.success("Added to cart");
   }
 };
 
