@@ -2,10 +2,15 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 
+
 export default function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [error, setError] = useState("");
+
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -21,8 +26,33 @@ export default function ProductDetails() {
     fetchProduct();
   }, [id]);
 
-  if (loading) return <p style={{ padding: "32px" }}>Loading...</p>;
+  if (loading) return <p style={{ padding: "32px" }}> Loading...</p>;
   if (!product) return <p>Product not found</p>;
+
+  const addToCartHandler = async () => {
+  if (!selectedSize) {
+    setError("Please select a size");
+    return;
+  }
+
+  try {
+    await api.post("/cart", {
+      productId: product._id,
+      size: selectedSize,
+      qty: 1,
+    });
+    alert("Added to cart");
+  } catch (err) {
+    setError("Please login to add items to cart");
+  }
+};
+
+
+
+
+
+
+
 
   return (
     <div style={styles.container}>
@@ -33,13 +63,34 @@ export default function ProductDetails() {
         <p style={styles.price}>Rs. {product.price}</p>
         <p>{product.description}</p>
 
-        <div style={styles.sizes}>
+        {/* <div style={styles.sizes}>
           {product.sizes.map((size) => (
             <button key={size} style={styles.sizeBtn}>{size}</button>
           ))}
+        </div> */}
+        <div style={styles.sizes}>
+        {product.sizes.map((size) => (
+          <button
+            key={size}
+            style={{
+              ...styles.sizeBtn,
+              background: selectedSize === size ? "#0000A3" : "#fff",
+              color: selectedSize === size ? "#fff" : "#000",
+            }}
+            onClick={() => setSelectedSize(size)}
+          >
+            {size}
+          </button>
+        ))}
         </div>
 
-        <button style={styles.cartBtn}>Add to Cart</button>
+
+        {error && <p style={{ color: "red" }}>{error}</p>}
+
+<button style={styles.cartBtn} onClick={addToCartHandler}>
+  Add to Cart
+</button>
+
       </div>
     </div>
   );
