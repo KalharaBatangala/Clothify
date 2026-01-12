@@ -9,6 +9,10 @@ import ProductDetails from "./pages/ProductDetails";
 import Register from "./pages/Register";
 import Checkout from "./pages/Checkout";
 import "./index.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
 
 function App() {
   return (
@@ -25,6 +29,18 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/checkout" element={<Checkout />} />
           </Routes>
+
+          <ToastContainer 
+            position="top-right" 
+            autoClose={3000} 
+            hideProgressBar={false} 
+            newestOnTop={false} 
+            closeOnClick 
+            rtl={false} 
+            pauseOnFocusLoss 
+            draggable 
+            pauseOnHover 
+          />
         </main>
 
         <Footer />

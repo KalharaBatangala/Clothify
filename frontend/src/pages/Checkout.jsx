@@ -107,6 +107,9 @@
 import { useState, useEffect } from "react";
 import api from "../api/axios";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
+
 
 export default function Checkout() {
   const [cart, setCart] = useState(null);
@@ -141,7 +144,18 @@ export default function Checkout() {
   const placeOrder = async () => {
     try {
       const { data } = await api.post("/orders/checkout", { shipping });
-      alert("Order placed successfully! Order ID: " + data._id);
+      //alert("Order placed successfully! Order ID: " + data.order._id);
+
+      Swal.fire({
+      title: "Order Placed!",
+      html: `
+        <p>Order ID: <strong>${data.order._id}</strong></p>
+        <p>Total: <strong>$${data.order.totalPrice.toFixed(2)}</strong></p>
+      `,
+      icon: "success",
+      confirmButtonText: "OK",
+    });
+    
       navigate("/"); // redirect to home after order
     } catch (err) {
       console.error(err);

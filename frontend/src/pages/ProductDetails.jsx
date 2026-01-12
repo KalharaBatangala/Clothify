@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../api/axios";
-
+import { toast } from "react-toastify";
 
 export default function ProductDetails() {
   const { id } = useParams();
@@ -35,15 +35,41 @@ export default function ProductDetails() {
     return;
   }
 
-  try {
-    await api.post("/cart/add", {
-      productId: product._id,
-      size: selectedSize,
-      quantity: 1,
-    });
-    alert("Added to cart");
-  } catch (err) {
-    setError("Please login to add items to cart");
+  if (localStorage.getItem("token")) {
+    // user is logged in
+    try {
+      await api.post("/cart/add", {
+        productId: product._id,
+        size: selectedSize,
+        quantity: 1,
+      });
+       toast.success("Added to cart");
+    } catch (err) {
+      toast.error("Failed to add item. Please login.");
+    }
+
+  } else {
+    // guest user , save to localStorage
+    const guestCart = JSON.parse(localStorage.getItem("guestCart")) || [];
+    const existingItem = guestCart.find(
+      (item) => item.productId === product._id && item.size === selectedSize
+    );
+
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      guestCart.push({
+        productId: product._id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        size: selectedSize,
+        qty: 1,
+      });
+    }
+
+    localStorage.setItem("guestCart", JSON.stringify(guestCart));
+    toast.success("Added to cart");
   }
 };
 
