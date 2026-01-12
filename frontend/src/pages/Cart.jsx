@@ -16,20 +16,20 @@ export default function Cart() {
     }
   };
 
-  const updateQty = async (itemId, qty) => {
-  if (qty < 1) return;
+  const updateQty = async (productId, size, quantity) => {
+  if (quantity < 1) return;
 
   try {
-    await api.put("/cart", { itemId, qty });
+    await api.put("/cart/update", { productId, size, quantity });
     fetchCart(); // refresh UI
   } catch (err) {
     console.error(err);
   }
 };
 
-const removeItem = async (itemId) => {
+const removeItem = async (productId, size) => {
   try {
-    await api.delete(`/cart/${itemId}`);
+    await api.delete("/cart/remove", { data: { productId, size } });
     fetchCart();
   } catch (err) {
     console.error(err);
@@ -47,10 +47,14 @@ const removeItem = async (itemId) => {
     return <p style={{ padding: 32 }}>Your cart is empty.</p>;
   }
 
-  const total = cart.items.reduce(
-    (sum, item) => sum + item.product.price * item.qty,
-    0
-  );
+  // const total = cart.items.reduce(
+  //   (sum, item) => sum + item.product.price * item.quantity,
+  //   0
+  // );
+  const total = cart.items
+  .reduce((sum, item) => sum + item.product.price * item.quantity, 0)
+  .toFixed(2); // round to 2 decimal places
+
 
   return (
     <div style={styles.container}>
@@ -59,7 +63,7 @@ const removeItem = async (itemId) => {
       {cart.items.map((item) => (
         <div key={item._id} style={styles.item}>
           <img
-            src={item.product.image}
+            src={`http://localhost:5000${item.product.imageUrl}`}
             alt={item.product.name}
             style={styles.image}
           />
@@ -85,17 +89,15 @@ const removeItem = async (itemId) => {
             <input
               type="number"
               min="1"
-              value={item.qty}
-              style={styles.qty}
-              onChange={(e) =>
-                updateQty(item._id, Number(e.target.value))
-              }
+              value={item.quantity}
+              style={styles.quantity}
+              onChange={(e) => updateQty(item.product._id, item.size, Number(e.target.value))}
             />
 
-            <p>${item.product.price * item.qty}</p>
+            <p>${item.product.price * item.quantity}</p>
 
             <button
-              onClick={() => removeItem(item._id)}
+              onClick={() => removeItem(item.product._id, item.size)}
               style={styles.removeBtn}
             >
               Remove
