@@ -36,10 +36,10 @@ export default function ProductDetails() {
   }
 
   try {
-    await api.post("/cart", {
+    await api.post("/cart/add", {
       productId: product._id,
       size: selectedSize,
-      qty: 1,
+      quantity: 1,
     });
     alert("Added to cart");
   } catch (err) {
